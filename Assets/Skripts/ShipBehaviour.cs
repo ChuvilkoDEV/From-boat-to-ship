@@ -58,12 +58,12 @@ public class ShipBehaviour : MonoBehaviour
         if (speed > -maxSpeedPerTick / 2 && buttonS)
             speed -= accelerationPerTick;
 
-        bool noButtonIsActive = (buttonW || buttonA || buttonS || buttonD) == false;
-        if (noButtonIsActive && speed > waterResistance)
+        bool noSpeedButtonIsActive = (buttonW || buttonS) == false;
+        if (noSpeedButtonIsActive && speed > waterResistance)
             speed -= waterResistance;
-        else if (noButtonIsActive && speed < waterResistance)
+        else if (noSpeedButtonIsActive && speed < -waterResistance)
             speed += waterResistance;
-        else if (noButtonIsActive)
+        else if (noSpeedButtonIsActive)
             speed = 0;
 
         transform.position += -transform.right * speed;
@@ -82,9 +82,6 @@ public class ShipBehaviour : MonoBehaviour
 
     private float roundAxis(float axis)
     {
-        if (axis >= 0)
-            return axis - axis % gridStep;
-        else
-            return axis - axis % gridStep;
+        return axis - axis % gridStep;
     }
 }
