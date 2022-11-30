@@ -14,25 +14,29 @@ public class ShipBehaviour : MonoBehaviour
     private float maxSpeedPerTick;
     private float accelerationPerTick;
     private float speed = 0;
-    private GameObject camera;
-    private Vector3 cameraOffset;
+    private GameObject cam;
+    private GameObject ocean;
 
     private void Start()
     {
-        camera = GameObject.Find("Main Camera");
-        cameraOffset = camera.transform.position;
+        cam = GameObject.Find("Main Camera");
+        cameraOffset = cam.transform.position;
+
+        ocean = GameObject.Find("Ocean");
+
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         MoveShip();
-
+        MoveOcean();
     }
 
     bool buttonW = false;
     bool buttonA = false;
     bool buttonS = false;
     bool buttonD = false;
+    private Vector3 cameraOffset = new Vector3(0, 28, -30);
     private void MoveShip()
     {
         maxSpeedPerTick = maxSpeedPerSec * Time.deltaTime;
@@ -50,16 +54,37 @@ public class ShipBehaviour : MonoBehaviour
             transform.Rotate(0, -rotateSpeed, 0);
 
         if (speed < maxSpeedPerTick && buttonW)
-            speed += accelerationPerTick * Time.deltaTime;
+            speed += accelerationPerTick;
         if (speed > -maxSpeedPerTick / 2 && buttonS)
-            speed -= accelerationPerTick * Time.deltaTime;
+            speed -= accelerationPerTick;
 
-        if (speed > 0 && (buttonW || buttonA || buttonS || buttonD) == false)
-            speed -= waterResistance * Time.deltaTime;
-        else if (speed < 0 && (buttonW || buttonA || buttonS || buttonD) == false)
-            speed += waterResistance * Time.deltaTime;
+        bool noButtonIsActive = (buttonW || buttonA || buttonS || buttonD) == false;
+        if (noButtonIsActive && speed > waterResistance)
+            speed -= waterResistance;
+        else if (noButtonIsActive && speed < waterResistance)
+            speed += waterResistance;
+        else if (noButtonIsActive)
+            speed = 0;
 
         transform.position += -transform.right * speed;
-        camera.transform.position += -camera.transform.right * speed;
+        cam.transform.position = transform.position + cameraOffset;
+
+        LowPolyWater.LowPolyWater.waveOriginPosition = -transform.position;
+        ocean.transform.position = transform.position;
+    }
+
+    private void MoveOcean()
+    {
+        Vector3 newPos = new Vector3(roundAxis(transform.position.x), 0, roundAxis(transform.position.z));
+        ocean.transform.position = newPos;
+        LowPolyWater.LowPolyWater.waveOriginPosition = -newPos;
+    }
+
+    private float roundAxis(float axis)
+    {
+        if (axis >= 0)
+            return axis - axis % gridStep;
+        else
+            return axis - axis % gridStep;
     }
 }

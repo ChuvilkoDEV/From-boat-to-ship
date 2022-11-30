@@ -9,7 +9,7 @@ namespace LowPolyWater
         public float waveLength = 0.75f;
 
         //Position where the waves originate from
-        public Vector3 waveOriginPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        static public Vector3 waveOriginPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
         MeshFilter meshFilter;
         Mesh mesh;
@@ -61,7 +61,7 @@ namespace LowPolyWater
             return mf;
         }
         
-        void Update()
+        void LateUpdate()
         {
             GenerateWaves();
         }
