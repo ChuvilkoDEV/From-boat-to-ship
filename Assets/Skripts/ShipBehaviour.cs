@@ -66,11 +66,9 @@ public class ShipBehaviour : MonoBehaviour
         else if (noSpeedButtonIsActive)
             speed = 0;
 
-        transform.position += -transform.right * speed;
+        transform.position += transform.forward * speed;
+        transform.position.Set(transform.position.x, 0.0f, transform.position.z);
         cam.transform.position = transform.position + cameraOffset;
-
-        LowPolyWater.LowPolyWater.waveOriginPosition = -transform.position;
-        ocean.transform.position = transform.position;
     }
 
     private void MoveOcean()
