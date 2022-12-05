@@ -11,7 +11,7 @@ public class CanonBehaviour : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             GameObject ball = Instantiate(Cannonball, transform);
             //ball.transform.localPosition += Vector3.forward * 2;
@@ -19,8 +19,11 @@ public class CanonBehaviour : MonoBehaviour
         }
     }
 
-    private void CalculateAngle()
+    private float CalculateAngle(float S)
     {
-
+        float underSin = (S * Physics.gravity.y) / Mathf.Pow(CannonballSpeed, 2);
+        if (underSin > 1)
+            return -90;
+        return Mathf.Asin(underSin) / 2;
     }
 }
