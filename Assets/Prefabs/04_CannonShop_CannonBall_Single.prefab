@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8137415011031860727}
   - component: {fileID: 6271562232659489085}
   - component: {fileID: 2710677581647211769}
+  - component: {fileID: -2869175236485261338}
   m_Layer: 0
   m_Name: 04_CannonShop_CannonBall_Single
   m_TagString: Untagged
@@ -100,3 +101,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-2869175236485261338
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5479170934772535528}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3939469, y: 0.41421992, z: 0.4142202}
+  m_Center: {x: 0.00000011920929, y: -0.000000022351742, z: 0.000000052154064}
